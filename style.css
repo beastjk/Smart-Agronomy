@@ -15,6 +15,10 @@ body{
   /* background: -webkit-linear-gradient(left, #a445b2, #fa4299); */
   background: -webkit-linear-gradient(left, black, black);
 }
+.img-fluid{
+  width: 600px;
+  height: 600px;
+}
 .wrapper{
   width: 800px;
   display: flex;

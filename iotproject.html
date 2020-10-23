@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Smart Agronomy</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-circle-progress/1.2.2/circle-progress.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+        <div class="row mb-3">
+            <div class="page-header">
+               <h1>Welcome to Smart Agrnomy</h1>
+               <hr> 
+            </div>
+        </div>
+        <div class="row">
+            <h3>Circuit Diagram : </h3>
+        </div>
+        <br>
+        <img src="./IOT_Project.JPG" class="img-fluid" alt="Responsive image">
+        <div class="row mt-4">
+            <h3>Components Used : </h3>
+        </div>
+        <hr>
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top" src="./soil-moisture.jpg" alt="Card image cap">
+                  <div class="card-body">
+                    <p class="card-text">The Moisture sensor is used to measure the water content(moisture) of soil.when the soil is having water shortage,the module output is at high level, else the output is at low level.</p>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top" src="./lm35.png" alt="Card image cap">
+                  <div class="card-body">
+                    <p class="card-text">LM35 is a temperature sensor</p>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top" src="./ESP8266-Pinout.png" alt="Card image cap">
+                  <div class="card-body">
+                    <p class="card-text">The ESP8266 can be controlled from your local Wi-Fi network or from the internet (after port forwarding). The ESP-01 module has GPIO pins that can be programmed to turn an LED or a relay ON/OFF through the internet. </p>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top" src="./lcd.png" alt="Card image cap">
+                  <div class="card-body">
+                    <p class="card-text">Liquid crystal displays (LCDs) are a commonly used to display data in devices such as calculators, microwave ovens, and many other electronic devices.</p>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top" src="./dc.png" alt="Card image cap">
+                  <div class="card-body">
+                    <p class="card-text">To control the direction of the motor, the pins in1 and in2 must be set to opposite values. If in1 is HIGH and in2 is LOW, the motor will spin one way, if on the other hand in1 is LOW and in2 HIGH then the motor will spin in the opposite direction.</p>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top" src="./trans.jpg" alt="Card image cap">
+                  <div class="card-body">
+                    <p class="card-text">A small transistor like the PN2222 can be used as a switch that uses just a little current from the Arduino digital output to control the much bigger current of the motor.</p>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <h3>Find state of Motor : </h3>
+        </div>
+        <br>
+        <hr>
+        <div class="row mt-5">
+            <div class="col-md-6">
+              <form>
+                <div class="form-group">
+                  <label for="tempreture">Enter Tempreture : </label>
+                  <input type="floatField" class="form-control" id="tempreture">
+                </div>
+                <div class="form-group">
+                  <label for="soilMoisture">Enter Soil Moisture : </label>
+                  <input type="floatField" class="form-control" id="soilMoisture">
+                </div>
+                <button id = 'submitB' type = 'submit' class="btn btn-info">Submit</button>
+            </form>
+            </div>
+        </div>
+        <div class="wrapper mt-5">
+          <div class="card js">
+            <div class="circle degree">
+              <div class="bar"></div>
+              <div class="box"><span></span></div>
+            </div>
+            <div class="text">Tempreture</div>
+          </div>
+          <div class="card react">
+            <div class="circle">
+              <div class="bar"></div>
+              <div class="box"><span></span></div>
+            </div>
+            <div class="text">Soil Moisture</div>
+          </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-6 motor">
+            </div>
+        </div>
+    </div>
+    
+<!-- jQuery and JS bundle w/ Popper.js -->
+    
+    <script>
+
+            $(document).ready(function(){
+                var temp;
+                var soilMoisture;
+                $("#submitB").click(function(){        
+                    $("form").submit(function(e){
+                        e.preventDefault();
+                        str = $("#tempreture").val();
+                        soilMoisture = $('#soilMoisture').val();
+                        let options = {
+                          startAngle: -1.55,
+                          size: 150,
+                          value: 0.85,
+                          fill: {gradient: ['rgba(109,25,252,1)', 'rgba(125,31,165,1)']}
+                        }
+
+                        $(".circle .bar").circleProgress(options).on('circle-animation-progress',
+                        function(event, progress, stepValue){
+                          $(this).parent().find("span").text(String(stepValue.toFixed(2).substr(2)) + "%");
+                        });
+
+                        $(".degree .bar").circleProgress(options).on('circle-animation-progress',
+                          function(event, progress, stepValue){
+                            $(this).parent().find("span").text(String(stepValue.toFixed(2).substr(2)) + "deg");
+                        });
+
+                        $(".js .bar").circleProgress({
+                            value: str
+                        });
+                    
+                        $(".react .bar").circleProgress({
+                            value: soilMoisture
+                        });
+                        if(str > 0.50 || soilMoisture < 0.20 ){
+                          console.log('hello')
+                          
+                          $(".motor").html("<b>The motor is ON </b>");
+                        }
+                        else{                          
+                          $(".motor").html("<b>The motor is OFF </b>");
+                        }
+                    }); // Submit the form
+                });
+                     
+            });
+            
+
+    </script>
+    <script script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+  </body>
+</html>
