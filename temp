@@ -1,0 +1,9 @@
+<div class="card">
+            <div class="circle">
+              <div class="bar"></div>
+              <div class="box"><span></span></div>
+            </div>
+            <div class="text">HTML & CSS</div>
+          </div>
+
+          fill: {gradient: ['#a445b2', '#fa4299']
