@@ -88,11 +88,11 @@
             <div class="col-md-6">
               <form>
                 <div class="form-group">
-                  <label for="tempreture">Enter Tempreture : </label>
+                  <label for="tempreture">Enter Tempreture : (in degree)</label>
                   <input type="floatField" class="form-control" id="tempreture">
                 </div>
                 <div class="form-group">
-                  <label for="soilMoisture">Enter Soil Moisture : </label>
+                  <label for="soilMoisture">Enter Soil Moisture : (in percentage)</label>
                   <input type="floatField" class="form-control" id="soilMoisture">
                 </div>
                 <button id = 'submitB' type = 'submit' class="btn btn-info">Submit</button>
@@ -131,7 +131,7 @@
                 $("#submitB").click(function(){        
                     $("form").submit(function(e){
                         e.preventDefault();
-                        str = $("#tempreture").val();
+                        temp = $("#tempreture").val();
                         soilMoisture = $('#soilMoisture').val();
                         let options = {
                           startAngle: -1.55,
@@ -151,19 +151,45 @@
                         });
 
                         $(".js .bar").circleProgress({
-                            value: str
+                            value: (temp/100)
                         });
                     
                         $(".react .bar").circleProgress({
-                            value: soilMoisture
+                            value: (soilMoisture/100)
                         });
-                        if(str > 0.50 || soilMoisture < 0.20 ){
-                          console.log('hello')
-                          
-                          $(".motor").html("<b>The motor is ON </b>");
+                        if(temp < 20){
+                          $(".motor").html("<b>The motor is ON with 100% duty cycle </b>");
+
                         }
-                        else{                          
-                          $(".motor").html("<b>The motor is OFF </b>");
+                        else if(soilMoisture < 40){
+                          if(temp >= 40){
+                              $(".motor").html("<b>The motor is ON with 100% duty cycle </b>");  
+                          }
+                          else if ((temp >= 30 && soilMoisture <= 40)){
+                              $(".motor").html("<b>The motor is ON with 80% duty cycle </b>");
+                          }
+                          else{
+                            $(".motor").html("<b>The motor is ON with 60% duty cycle </b>");
+                          }
+                        }
+                        else if(soilMoisture <= 70){
+                          if(temp >= 40){
+                              $(".motor").html("<b>The motor is ON with 80% duty cycle </b>");  
+                          }
+                          else if ((temp >= 30 && soilMoisture <= 40)){
+                              $(".motor").html("<b>The motor is ON with 60% duty cycle </b>");
+                          }
+                          else{
+                            $(".motor").html("<b>The motor is ON with 30% duty cycle </b>");
+                          }
+                        }
+                        else if(soilMoisture <= 100){
+                          if(temp >= 40){
+                              $(".motor").html("<b>The motor is ON with 30% duty cycle </b>");  
+                          }
+                          else{
+                            $(".motor").html("<b>The motor is OFF </b>");
+                          }
                         }
                     }); // Submit the form
                 });
